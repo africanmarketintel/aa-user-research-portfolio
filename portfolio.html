@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr Dayo Abinusawa — User Researcher</title>
+  <!--
+    ════════════════════════════════════════════════════════════
+    HOW TO ADD PROJECT IMAGES
+    ════════════════════════════════════════════════════════════
+    Each <article class="case"> has two data attributes:
+
+      data-device="mobile"   → shows a phone frame  (default)
+      data-device="laptop"   → shows a laptop frame
+
+      data-img=""            → leave empty for placeholder
+      data-img="path/to/screenshot.png"  → add your image path
+
+    Example:
+      <article class="case" data-sector="coopbank"
+               data-device="mobile"
+               data-img="images/card-hub.png">
+
+    Images should ideally be:
+      Mobile  →  390 × 844 px  (9:19 ratio)
+      Laptop  →  1280 × 800 px (16:10 ratio)
+    ════════════════════════════════════════════════════════════
+  -->
+  <style>
+    /* ── Tokens ─────────────────────────────────────────────── */
+    :root {
+      --navy:      #1B3A5C;
+      --navy-deep: #0D2337;
+      --teal:      #0F7E8A;
+      --teal-lite: #E0F2F4;
+      --slate:     #445A70;
+      --mist:      #EFF3F7;
+      --sect:      #D6E8F2;
+      --white:     #ffffff;
+      --border:    #CBD8E4;
+      --text:      #1A2733;
+      --label:     #6B8299;
+      --radius:    8px;
+      --max:       1120px;
+      --font:      'Inter', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    /* ── Reset ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      font-size: 15px;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Nav ────────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    nav .brand {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+    }
+    nav .nav-links {
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+    }
+    nav .nav-links a { color: var(--slate); }
+    nav .nav-links a:hover { color: var(--teal); text-decoration: none; }
+
+    /* ── Hero ───────────────────────────────────────────────── */
+    .hero {
+      background: var(--navy);
+      padding: 72px 24px 64px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .hero .role {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #B0D0E8;
+      letter-spacing: 0.02em;
+    }
+    .hero .tagline {
+      margin-top: 12px;
+      font-size: 15px;
+      font-style: italic;
+      color: #90BCD4;
+    }
+    .hero .bio {
+      margin: 24px auto 0;
+      max-width: 560px;
+      font-size: 14px;
+      color: #90BCD4;
+      line-height: 1.7;
+      border-left: 3px solid var(--teal);
+      padding-left: 16px;
+      text-align: left;
+    }
+
+    /* ── Metrics ────────────────────────────────────────────── */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .metric-num {
+      background: var(--teal);
+      padding: 18px 12px 8px;
+      text-align: center;
+    }
+    .metric-num span {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .metric-lbl {
+      background: var(--navy);
+      padding: 6px 12px 16px;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #B0D0E8;
+    }
+
+    /* ── Main ───────────────────────────────────────────────── */
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    /* ── Selected works heading ─────────────────────────────── */
+    .works-heading {
+      margin-bottom: 40px;
+    }
+    .works-heading h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .works-heading p {
+      margin-top: 6px;
+      font-size: 15px;
+      color: var(--slate);
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--teal);
+    }
+
+    /* ── Sector filter tabs ─────────────────────────────────── */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .filter-btn {
+      padding: 6px 16px;
+      border-radius: 100px;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--slate);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: var(--white);
+    }
+
+    /* ── Sector label ───────────────────────────────────────── */
+    .sector-label {
+      display: inline-block;
+      background: var(--sect);
+      color: var(--navy);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+      margin-top: 56px;
+    }
+    .sector-label:first-of-type { margin-top: 0; }
+
+    /* ── Case study card — split layout ─────────────────────── */
+    .case {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 40px;
+      border: 1px solid var(--border);
+      transition: box-shadow .25s;
+    }
+    .case:hover {
+      box-shadow: 0 8px 40px rgba(27,58,92,.16);
+    }
+
+    /* ── Image panel (left) ─────────────────────────────────── */
+    .case-image {
+      background: var(--navy-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 28px;
+      min-height: 320px;
+    }
+
+    /* Phone frame */
+    .device-mobile {
+      width: 160px;
+      background: #111;
+      border-radius: 26px;
+      padding: 10px 10px 12px;
+      box-shadow:
+        0 0 0 2px #2a2a2a,
+        inset 0 0 0 1px #3a3a3a,
+        0 28px 72px rgba(0,0,0,.55);
+      position: relative;
+    }
+    .device-mobile::before {
+      content: '';
+      display: block;
+      width: 44px;
+      height: 5px;
+      background: #2b2b2b;
+      border-radius: 3px;
+      margin: 0 auto 7px;
+    }
+    .device-mobile .screen {
+      border-radius: 16px;
+      width: 100%;
+      aspect-ratio: 9/19;
+      overflow: hidden;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .device-mobile .screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Laptop frame */
+    .device-laptop {
+      width: 256px;
+      position: relative;
+    }
+    .device-laptop .lid {
+      background: #141414;
+      border-radius: 7px 7px 0 0;
+      padding: 7px;
+      box-shadow: 0 0 0 1.5px #2a2a2a, 0 20px 60px rgba(0,0,0,.45);
+    }
+    .device-laptop .screen {
+      border-radius: 3px;
+      width: 100%;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .device-laptop .screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .device-laptop .base {
+      background: #1c1c1c;
+      height: 9px;
+      border-radius: 0 0 5px 5px;
+      box-shadow: 0 0 0 1.5px #2a2a2a;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .device-laptop .base::after {
+      content: '';
+      display: block;
+      width: 36px;
+      height: 4px;
+      background: #2a2a2a;
+      border-radius: 0 0 3px 3px;
+    }
+
+    /* Placeholder screen content */
+    .no-img {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .no-img svg {
+      color: #3A6080;
+      opacity: .7;
+    }
+    .no-img span {
+      font-size: 8.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #3A6080;
+      text-align: center;
+    }
+
+    /* ── Content panel (right) ──────────────────────────────── */
+    .case-content {
+      background: var(--white);
+      padding: 32px 40px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-tags {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+
+    .case-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 24px;
+    }
+
+    /* C/A/R sections */
+    .car-section {
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      margin-top: 0;
+    }
+    .car-section + .car-section {
+      margin-top: 16px;
+    }
+    .car-section h4 {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+    .car-section p {
+      font-size: 13.5px;
+      color: var(--slate);
+      line-height: 1.75;
+    }
+    .car-section.result h4 {
+      color: var(--navy);
+    }
+    .key-finding {
+      font-style: italic;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--label);
+    }
+    footer a { color: var(--teal); }
+
+    /* ── Hidden utility ─────────────────────────────────────── */
+    .hidden { display: none !important; }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 820px) {
+      .case { grid-template-columns: 1fr; }
+      .case-image { min-height: 200px; padding: 32px 24px; }
+      .device-mobile { width: 130px; }
+      .device-laptop { width: 210px; }
+      .case-content { padding: 24px 24px; }
+    }
+    @media (max-width: 560px) {
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      nav .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ───────────────────────────────────────────────────── -->
+<nav>
+  <span class="brand">Dr Dayo Abinusawa</span>
+  <div class="nav-links">
+    <a href="#works">Selected works</a>
+    <a href="mailto:eloseh.press@gmail.com">Contact</a>
+    <a href="https://uxfol.io/p/dayo.abinusawa/0367e3e6" target="_blank" rel="noopener">UX Folio ↗</a>
+  </div>
+</nav>
+
+<!-- ── Hero ──────────────────────────────────────────────────── -->
+<header class="hero">
+  <h1>Dr Dayo Abinusawa</h1>
+  <p class="role">User Researcher</p>
+  <p class="tagline">Generating insight that helps teams build better products</p>
+  <p class="bio">Experienced in User Experience Research. Passionate about helping teams
+    build products that solve user problems, having worked with talented teams across
+    Financial Services, Government, Energy and EdTech.</p>
+
+  <div class="metrics" style="margin-top:40px;">
+    <div class="metric-num"><span>36</span></div>
+    <div class="metric-num"><span>42</span></div>
+    <div class="metric-num"><span>20K</span></div>
+    <div class="metric-num"><span>100K</span></div>
+    <div class="metric-lbl">Interviews</div>
+    <div class="metric-lbl">Usability Tests</div>
+    <div class="metric-lbl">Research Hours</div>
+    <div class="metric-lbl">Interactions Analysed</div>
+  </div>
+</header>
+
+<!-- ── Main ──────────────────────────────────────────────────── -->
+<main id="works">
+
+  <div class="works-heading">
+    <h2>Selected works</h2>
+    <p>Projects spanning the full research lifecycle — from discovery to design validation</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="coopbank">Co-operative Bank</button>
+    <button class="filter-btn" data-filter="government">Government</button>
+    <button class="filter-btn" data-filter="shell">Shell</button>
+    <button class="filter-btn" data-filter="earlier">Earlier work</button>
+  </div>
+
+  <!-- ══ CO-OPERATIVE BANK ══════════════════════════════════════ -->
+  <div class="sector-label" data-sector="coopbank">Co-operative Bank</div>
+
+  <article class="case" data-sector="coopbank" data-device="mobile" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Financial Services · Usability Testing · n=10</div>
+      <h3 class="case-title">Co-op Bank Card Hub — Unmoderated Remote Usability Study</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>The Card Hub prototype needed usability evidence before handoff — specifically how customers would interact with card management, multi-card navigation and additional cardholder updates.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Ran an unmoderated remote usability study (n=10) on a Figma prototype via UserTesting.com, structured across three sections: initial impressions, task-based testing with ease and clarity ratings, and attitudinal measurement (SUS and NPS). Participants thought aloud throughout.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p>SUS 91 ('Excellent / Best Imaginable'), NPS 60, no detractors. <span class="key-finding">Key finding: blue header text was mistaken for clickable links</span> — a specific, actionable fix for the design team ahead of handoff.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="coopbank" data-device="mobile" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Financial Services · Concept Testing · Accessibility Evaluation</div>
+      <h3 class="case-title">Co-op Bank Card Hub Carousel — Concept Testing &amp; Accessibility</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>Before building the card hub carousel, the team needed evidence on mental models for card switching, additional cardholder management expectations, and accessibility across a range of needs.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Ran an unmoderated remote concept test (Figma, UserTesting.com), building on a prior PIN study (n=20). Four objectives: carousel navigation and cardholder management (primary); usability clarity and accessibility — screen readers, keyboard navigation, tap targets, state feedback — (secondary). Screener ensured a mix of customers and participants with accessibility needs.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p>Evidence covered navigation mental models, cardholder management expectations and specific accessibility gaps — including visual state feedback and tap target adequacy. Findings informed design revisions and briefed the accessibility team ahead of development.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="coopbank" data-device="mobile" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Financial Services · Comparative Usability Testing · n=16</div>
+      <h3 class="case-title">Co-op Bank PIN &amp; Card Details — A/B Unmoderated Usability Study</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>The team needed evidence to choose between two designs for PIN and card details in the mobile app — both incorporating PIN reveal, an auto-hide timer and full card details display — before development handoff.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Within-subjects, counterbalanced unmoderated study (n=16), with order counterbalanced to control bias. Three objectives: clarity (timer comprehension, card field interpretation), usability (PIN reveal, navigation errors) and preference. Findings segmented by customer status.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p>Evidence on which version performed better across all three dimensions, segmented by customer status — directly supporting design decisions ahead of handoff without assumptions.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="coopbank" data-device="laptop" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Financial Services · Usability Testing · n=8–12 · Desktop</div>
+      <h3 class="case-title">Co-op Bank Accounts Dashboard — Redesign Usability Testing</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>Before releasing a redesigned Accounts dashboard — featuring a hide/show balances toggle, quick actions and a Manage tab — the team needed evidence that the changes were useful, clear and navigable.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Unmoderated remote study (n=8–12, UserTesting.com) structured around seven research questions: secondary account information, hide/show balances discoverability, quick action utility, account management discoverability, Manage tab usefulness, expected options by account type, and natural navigation. Participants held a current account plus at least one additional product.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p>Evidence across all seven research questions validated what worked and identified specific improvements — informing final design adjustments before release.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="coopbank" data-device="laptop" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Financial Services · Voice of Customer · Glassbox · Consumer Duty</div>
+      <h3 class="case-title">Help &amp; Support Page — Voice of Customer Diagnosis</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>Analytics revealed a 12-point drop in page usefulness on the Help &amp; Support page (64% to 52%) — a primary self-service destination. Left undiagnosed, it risked rising contact centre volume and Consumer Duty failures.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Designed a triggered VoC survey in Glassbox, deployed at page exit. Four structured questions with conditional branching isolated three variables: task intent, task success and failure point — producing more actionable data than a generic rating.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p>Moved the team from a single aggregate score to an intent-based view of failure — distinguishing users who couldn't find information from those who found it but couldn't complete their task. <span class="key-finding">Directly informed improvement prioritisation.</span></p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="coopbank" data-device="mobile" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Financial Services · Mixed Methods · B2B · Four Customer Segments</div>
+      <h3 class="case-title">BaCB Paperless Statements — Mixed-Methods Research Programme</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>Before development could begin on digital statement access for BaCB customers, the team needed to validate what customers wanted and where the journey was failing — across four segments: sole traders, SMEs, larger commercial customers and charities/CICs.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Three-phase programme: depth interviews across all four segments (covering format preferences, paperless concerns, notification needs, bulk download and historic access), a prototype usability test, and a stakeholder readout with decision log. Research questions were co-designed with the Product Owner.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p>Delivered a synthesis pack with verbatim quotes, jobs to be done by segment, friction points and prioritised gaps. The research-backed scope envelope gave the Product Owner clear boundaries for story drafting.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="coopbank" data-device="mobile" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Financial Services · Sequential Studies · FinTech · B2B</div>
+      <h3 class="case-title">Go Get Paid — Payment Request Flow Research</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>Go Get Paid's payment request flow required four inputs: amount, reason, recipient and channel. The team needed evidence on the most logical field order, field treatments and where shortcuts would reduce effort.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Three sequential studies: a baseline (Study 1), comparison of three field-order variants — amount-first (A), recipient-first (B), single-screen (C) — (Study 2), and a refined prototype test (Study 3). Participants were sole traders and small business owners recruited via UserTesting.com. SEQ and SUS captured per study.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p>Delivered a recommended field sequence, field treatment specifications, review screen requirements and shortcut expectations for repeat users — directly informing the product roadmap.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="coopbank" data-device="laptop" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Financial Services · Competitor Research · B2B Account Opening</div>
+      <h3 class="case-title">BaCB Online — Companies House Sign-Up Flow Competitor Analysis</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>The BaCB team needed to understand how competitors handle the Companies House search step in business account opening journeys — to inform the BaCB Online design and identify opportunities to differentiate.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Structured walkthroughs of NatWest, HSBC and Lloyds, plus a scan of four challengers (Tide, Starling, Mettle, CAF Bank). Evaluated five dimensions: CH step placement, search experience, data accuracy handling, eligibility restrictions and pre-population rates. Findings synthesised into design implications.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p><span class="key-finding">CH pre-population is low across all three high-street banks (11–16%)</span> — a clear differentiating opportunity. All three share a gap: no dormant company warning at the search step. Prioritised implications fed directly into the BaCB Online design.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- ══ GOVERNMENT ═════════════════════════════════════════════ -->
+  <div class="sector-label" data-sector="government">Government &amp; Public Sector</div>
+
+  <article class="case" data-sector="government" data-device="laptop" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Government · GDS Compliance · Heuristic Evaluation</div>
+      <h3 class="case-title">HMRC Digital Assistant — GDS Service Standard Compliance</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>The HMRC Digital Assistant needed assessing against GDS standards. Users lacked a notification feature, making services difficult to access and queries hard to resolve.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Worked with designers, a BA, PM and Engagement Lead to review the interface and develop a prototype. Assessed GDS compliance across styles, components and patterns. Used click maps (heatmap and click density grid) to identify where users expected to find notification controls.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p>Findings informed the resolution of 25% of pain points — including adding 'print or save chat'. <span class="key-finding">Following research-informed changes, over 60% of users completed tasks on the first click.</span></p>
+      </div>
+    </div>
+  </article>
+
+  <!-- ══ SHELL ══════════════════════════════════════════════════ -->
+  <div class="sector-label" data-sector="shell">Energy — Shell</div>
+
+  <article class="case" data-sector="shell" data-device="laptop" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Enterprise B2B · Portal UX · Service Design</div>
+      <h3 class="case-title">Shell MarketHub — Self-Service Portal Optimisation</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>Shell partners found it difficult to complete tasks on MarketHub — a self-service portal for orders, account management, reporting and training — driving up customer operations contacts.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Analysed feedback surveys and facilitated a stakeholder workshop to align on priorities. Mapped user journeys, identified and prioritised pain points, then validated enhancements through UAT.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p><span class="key-finding">Research findings informed changes that reduced prioritised user pain points by 50%.</span></p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="shell" data-device="laptop" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Enterprise B2B · User Journey Mapping · Service Design</div>
+      <h3 class="case-title">Shell — User Journey Mapping for Order Fulfilment</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>Stakeholders needed to understand how different customer types moved through the online ordering journey and where the experience was breaking down.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Facilitated stakeholder workshops to define priorities, then led user research — mapping journeys across buyer personas to surface friction points and inform the interface design.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p><span class="key-finding">Research findings contributed to a 60% increase in online order completions over three months.</span> The approach was adopted by the management team to standardise how user insight was gathered and applied.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="shell" data-device="laptop" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Enterprise B2B · Service Blueprint · WCAG 2.1 AA</div>
+      <h3 class="case-title">Shell — Service Blueprint for Accessibility Compliance</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>Shell needed to improve accessibility compliance against WCAG 2.1 AA — the existing interface had not been formally assessed.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Ran a colour assessment diagnosis (CAD) test and heuristic evaluation to identify design issues. Produced a service blueprint mapping processes and touchpoints. Provided evidence-based recommendations to the UI designer on font size, publication format and colour filters.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p><span class="key-finding">Findings informed the resolution of 50% of service failures</span> and improved accessibility compliance within three months. The blueprint identified key touchpoints and optimisation opportunities.</p>
+      </div>
+    </div>
+  </article>
+
+  <!-- ══ EARLIER WORK ═══════════════════════════════════════════ -->
+  <div class="sector-label" data-sector="earlier">Earlier Work</div>
+
+  <article class="case" data-sector="earlier" data-device="laptop" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Process Design · Workflow Mapping</div>
+      <h3 class="case-title">Content Management System — Workflow Research</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>The existing CMS workflow was unclear to users — they couldn't identify the people, tools and resources needed — and contained bottlenecks and redundant steps.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Mapped and documented the existing workflow in Figma, making process gaps and resource requirements visible. Collaborated with stakeholders to validate findings and agree priorities.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p>Surfaced bottlenecks, redundant steps and role ambiguities — providing a clear evidence base for workflow redesign and improving the team's shared understanding of the process.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="earlier" data-device="mobile" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">User Research · Qualitative Interviews</div>
+      <h3 class="case-title">User Personas — Needs Discovery</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>The team needed a structured understanding of user needs, goals and expectations before designing a new service.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Conducted stakeholder interviews to identify key demographics, goals and concerns. Synthesised findings into user personas representing distinct user types.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p>Informed the design of a new service through a deeper, evidence-based understanding of user behaviours and needs.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="earlier" data-device="mobile" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Product Design · A/B Testing · Mobile</div>
+      <h3 class="case-title">Thought Leadership Platform — Mobile Research</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>The client needed evidence to inform the design of a mobile interface for accessing thought leadership content on demand.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Cross-sectional study of stockbrokers and regulators using interviews and secondary sources. Unmoderated A/B tests validated design hypotheses; prototype iterated based on user feedback.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p><span class="key-finding">Research informed a design that achieved over 100 downloads in week one via mobile</span> and supported the case for partnerships with media and financial services firms.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="earlier" data-device="laptop" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">EdTech · User Journey Mapping · Survey Research</div>
+      <h3 class="case-title">Virtual Learning Environment — User Journey Mapping</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>Users were unable to access relevant content on the VLE, leading to high non-completion rates across programmes.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Created a user journey map to identify where the experience was breaking down. Administered a structured questionnaire with closed and open-ended questions, supplemented by observation of VLE use.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p><span class="key-finding">Research findings informed a redesign that achieved a 100% completion rate across key programmes.</span></p>
+      </div>
+    </div>
+  </article>
+
+  <article class="case" data-sector="earlier" data-device="laptop" data-img="">
+    <div class="case-image"></div>
+    <div class="case-content">
+      <div class="case-tags">Research &amp; Strategy · Secondary Research · Framework Design</div>
+      <h3 class="case-title">Decision-Making Analytical Framework</h3>
+      <div class="car-section">
+        <h4>Challenge</h4>
+        <p>The team needed to understand how managers and customers make decisions and interact with the service.</p>
+      </div>
+      <div class="car-section">
+        <h4>Approach</h4>
+        <p>Analysed secondary data spanning 30 years and conducted primary interviews to identify challenges in decision-making.</p>
+      </div>
+      <div class="car-section result">
+        <h4>The result</h4>
+        <p>The framework helps firms refine or establish an effective decision-making system, grounded in longitudinal secondary data and primary user insight.</p>
+      </div>
+    </div>
+  </article>
+
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────────── -->
+<footer>
+  <p>
+    <a href="https://uxfol.io/p/dayo.abinusawa/0367e3e6" target="_blank" rel="noopener">
+      uxfol.io/p/dayo.abinusawa/0367e3e6
+    </a>
+  </p>
+</footer>
+
+<!-- ── Scripts ────────────────────────────────────────────────── -->
+<script>
+  /* ── Device frame builder ────────────────────────────────── */
+  const CAMERA_SVG = `
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="6" width="20" height="14" rx="2"/>
+      <circle cx="12" cy="13" r="4"/>
+      <path d="M8 6 10 3h4l2 3"/>
+    </svg>`;
+
+  document.querySelectorAll('.case').forEach(c => {
+    const device  = c.dataset.device || 'mobile';
+    const imgSrc  = (c.dataset.img || '').trim();
+    const imgPanel = c.querySelector('.case-image');
+
+    const screenImg = imgSrc
+      ? `<img src="${imgSrc}" alt="Project screenshot" loading="lazy">`
+      : `<div class="no-img">${CAMERA_SVG}<span>Add screenshot</span></div>`;
+
+    if (device === 'laptop') {
+      imgPanel.innerHTML = `
+        <div class="device-laptop">
+          <div class="lid">
+            <div class="screen">${screenImg}</div>
+          </div>
+          <div class="base"></div>
+        </div>`;
+    } else {
+      imgPanel.innerHTML = `
+        <div class="device-mobile">
+          <div class="screen">${screenImg}</div>
+        </div>`;
+    }
+  });
+
+  /* ── Sector filter ───────────────────────────────────────── */
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cases   = document.querySelectorAll('.case');
+  const labels  = document.querySelectorAll('.sector-label');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const f = btn.dataset.filter;
+
+      cases.forEach(c => {
+        c.classList.toggle('hidden', f !== 'all' && c.dataset.sector !== f);
+      });
+
+      labels.forEach(l => {
+        const visible = f === 'all' || f === l.dataset.sector;
+        l.classList.toggle('hidden', !visible);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
